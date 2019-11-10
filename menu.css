@@ -1,0 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.menu{
+    background-color: #571669;
+    padding: 10px;
+    text-align: center;
+
+}
+
+#areaLogo, .menu{
+    padding: 10px 20px 22px;
+}
+
+h1{
+    color: #ffffff;
+    font-size: 40px;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+
+.links:link, .links:visited{
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 5px;
+    border: 1px;
+}
+
+.links:hover{
+    color: #571669;
+    background: #fff;
+}
+
+body{
+    background: #fff url('./Images/pet2.jpg') no-repeat;
+}
+
+.footer{
+    background-color: #571669;
+    padding: 15px 15px 15px 15px;
+    color: white;
+    text-align: center;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    height: 20px;
+    clear: both;
+}

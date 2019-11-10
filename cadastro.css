@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.menu{
+    background-color: #571669;
+    padding: 18px;
+    text-align: center;
+
+}
+
+#areaLogo, .menu{
+    padding: 10px 20px 22px;
+}
+
+h1{
+    color: #ffffff;
+    font-size: 40px;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+
+a:link, a:visited{
+    color: #fff;
+    padding: 8px 40px;
+    border-radius: 5px;
+    border: 1px;
+}
+
+a:hover{
+    color: #571669;
+    background: #fff;
+}
+
+body{
+    background: #fff url('./Images/pet2.jpg') no-repeat;
+}
+
+.content{
+    font-size: 16px;
+    background: #571669;
+    max-width: 500px;
+    margin: 90px auto;
+    padding: 0px 10px 10px 10px;
+    border-radius: 10px;
+    border: 2 solid;
+    height: 370px;
+}
+
+h3{
+    font-size: 32px;
+    color: #fff;
+    text-align: center;
+    padding: 20px 20px 35px 20px;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.field{
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 0 solid;
+    width: 94%;
+    height: 8px;
+}
+
+.enviar input{
+    background-color: #fff;
+    height: 40px;
+    width: 150px;
+    border-radius: 5px;
+    border: 0 solid;
+    color: #571669;
+    font-weight: bold;
+    cursor: pointer;
+}
