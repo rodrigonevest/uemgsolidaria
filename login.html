@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="menu.css" type="text/css">
+    <title>Login</title>
+
+    <style>
+        .content{
+            font-size: 16px;
+            background: #571669;
+            max-width: 500px;
+            margin: 160px auto;
+            padding: 10px 10px 20px 10px;
+            border-radius: 5px;
+            border: 1px;
+            height: 220px;
+        }
+        h3{
+            font-size: 32px;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 20px 30px 20px;
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+        }
+        .form{
+            display: flex;
+            flex-direction: column;
+        }
+        .field{
+            text-align: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+            border: 1px;
+            width: 92%;
+            height: 6px;
+            margin: 10px 5px 0 10px;
+        }
+        .enviar input{
+            background-color: #ffffff;
+            height: 40px;
+            width: 150px;
+            border-radius: 5px;
+            border: 1px;
+            color: #571669;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 10px 30px 10px;
+            float: right;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="menu">
+        <div id="areaLogo">
+            <H1 id="principal">UEMG SOLIDÁRIA</H1>
+        </div>
+        <div id="areaMenu">
+            <a class="links" href="index.html">Início</a>
+            <a class="links" href="campanha.html">Campanha</a>
+            <a class="links" href="hospital.html">Hospital</a>
+            <a class="links" href="curso.html"> Curso Sistemas de Informação</a>
+            <a class="links" href="uemg.html">UEMG</a>
+        </div>
+    </div>
+    <section class="content">
+        <div class="login">
+            <h3>Login</h3>
+
+            <form class="form" method="POST">
+                <p>
+                    <input type="text" class="field" name="user"
+                        placeholder="ID ou Email" required>
+                </p>
+                <p>
+                    <input type="password" class="field" name="password"
+                        placeholder="Senha" required>
+                </p>
+                <p class="enviar">
+                    <input type="submit" value="Entrar" name="submit">
+                </p>
+            </form>
+        </div>
+    </section>
+    <footer class="footer">
+        Todos os direitos reservados
+    </footer>
+
+</body>
+</html>

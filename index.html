@@ -1,159 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-	<title>UEMG SOLIDÁRIA</title>
-	<meta charset="utf-8">
-	<style type="text/css">
-		*{
-			margin: 1;
-			padding: 0;
-		}
-		.menu ul li{
-			list-style: none;
-			position: relative;
-			font-family: "Arial";
-			background-color: #571669;
-			color: #f4f5f0;
-			float: left;
-			width: 266px;
-			height: 40px;
-			display: inline-block;
-			text-align: center;
-			line-height: 40px;
-			font-size: 15px;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="menu.css" type="text/css">
+    <title>Ínicio</title>
 
-		}
-		.menu ul li:hover{
-			background-color: #571669;
-			color: #555;
-		}
-		.menu a{
-			padding: 15px;
-			display: block;
-			text-decoration: none;
-			background-color: #571669;
-			color: #fff;
-			margin-bottom: 5px;
-		}
-				.imagem img{
-				width: 700px;
-				height: 430px;
-				padding: 40px;
-				
-			}
-			.texto {
-				font-size: 15px;
-				color: #571669;
-				padding: 20px;
-			}
-			.menula ul li{
-			list-style: none;
-			position: relative;
-			font-family: "Arial";
-			background-color: #571669;
-			color: #f4f5f0;
-			float: right;
-			width: 253px;
-			height: 40px;
-			display: inline-block;
-			text-align: center;
-			line-height: 50px;
-			font-size: 15px;
+    <style>
+        .image{
+            margin: 30px;
+            text-align: center;
+        }
+        .alink{
+            background-color: #571669;
+            display: flex;
+            width: 180px;
+            padding: 8px;
+            margin: 10px;
+            color: white;
+            border-radius: 5px;
+            border: 1px;
+        }
+        .alink:hover{
+            background-color: white;
+            color: #571669;
+        }
+        .adoacao{
+            float: right;
+            background-color: #571669;
+            display: flex;
+            width: 180px;
+            padding: 8px;
+            margin: 10px;
+            color: white;
+            border-radius: 5px;
+            border: 1px;
+        }
+        .adoacao:hover{
+            background-color: white;
+            color: #571669;
+        }
 
 
-		}
-		.menula ul li:hover{
-			background-color: #571669;
-			color: #555;
-		}
-		.menula a{
-			padding: 15px;
-			display: contents;
-			text-decoration: none;
-			background-color: #571669;
-			color: #fff;
-			margin-bottom: 5px;
-		}
-			.clearfix:after;{
-				content: "";
-				clear: both;
-				display: table;}
-			.column{
-				float: right;
-				padding: 10px;
-}
-			.coludoe{
-				float: left;
-				padding: 15px;
-			}
-			.menudoe{
-				width: 20%;
-			}
-			.menudoe ul{
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			.menudoe li:houver{
-				padding: 8px;
-				margin-bottom: 8px;
-			}
-			.imagemdoe img{
-				width: 100px;
-				height: 100px;
-				padding: 10px;
-			}
-
-	</style>
+        
+    </style>
 </head>
-<body background="pet2.jpg">
-	
-	<header>
-	 <nav class="menu">
-	 	<ul>
-	 		<p><li><a href="index.html">Inicio</a></li></p>
-	 		<li><a href="campanha.html">Campanha</a></li>
-	 		<li><a href="hospital.html"> Hospital</a></li>
-	 		<li><a href="curso.html"> Curso Sistemas de Informação</a></li>
-	 		<li><a href="uemg.html"> UEMG</a></li>
-	 	</ul>
-            
-        </nav>
-        <div class="imagem">
-	<center>
-		<img src="campanha.jpg">
-	</center>
-	<div class="clearfix">
-	<nav class="column menula ">
+<body>
+    <div class="menu">
+        <div id="areaLogo">
+            <H1 id="principal">UEMG SOLIDÁRIA</H1>
+        </div>
+        <div id="areaMenu">
+            <a class="links" href="index.html">Início</a>
+            <a class="links" href="campanha.html">Campanha</a>
+            <a class="links" href="hospital.html">Hospital</a>
+            <a class="links" href="curso.html"> Curso Sistemas de Informação</a>
+            <a class="links" href="uemg.html">UEMG</a>
+        </div>
+    </div>
+    <div class="image">
+        <img src="./Images/campanha.jpg" height="350" width="472">
+    </div>
 
-	<ul><p>
-			<li><a href="#">Login</a></li><br><br>
-	</p>
+    <div>
+        <p><a class="alink" href="login.html">Login</a></p>
+        <p><a class="alink" href="cadastro.html">Cadastre-se</a></p>
+        <p><a class="alink" href="ranking.html">Acompanhe o Ranking</a></p>
+    </div>
+    <div>
+        <p><a class="adoacao" href="doacao.html">Doe</a></p>
+    </div>
+    <footer class="footer">
+        Todos os direitos reservados
+    </footer>
 
-		<p>
-		<li><a href="#">Cadastre-se</a></li><br><br>
-		</p>
-		<li><a href="#">Acompanhe o RANKING </a></li>
-			</ul>
-</nav></div>
-</div>
-
-<div class="imagemdoe">
-	<div class="clearfix">
-		<div class="coludoe menudoe">
-			<div class="texto">
-			<ul><h2>Faça sua doação</h2>
-				<li><a href="doação.html"><img src="doe.jpg"></a></li>
-			</ul>
-			</div>
-		</div>
-		
-	</div>
-	
-</div>
-
-
-
-</header>
 </body>
 </html>
