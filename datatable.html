@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="menu.css" type="text/css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.js"></script>
+    <title>Doe</title>
+</head>
+<body>
+        <script>
+            $(document).ready( function () {
+                const url = "http://localhost:2017/";
+                const methods = {
+                    "GetCampanhaRankingIndividual":     "/public/campanha/:camp_id/individual",
+                    "GetCampanhaRankingGrupo":          "/public/campanha/:camp_id/grupo",
+                    "GetGruposDoacao":                  "/public/grupo/:gru_id/campanha/:camp_id",
+                    "GetGruposIntegrantes":             "/public/grupo/:gru_id/users",
+                    "GetGrupos":                        "/public/grupos",
+                    "GetCampanhas":                     "/public/campanhas",
+                    "GetUsuarios":                      "/admin/usuarios",
+                    "GetUsuarioDoacao":                 "/admin/user/:usu_id/doacao/:camp_id",
+                }
+                // const getUrl = (method, )
+
+                const params = (() => {
+                    var params = {},
+                        pairs = document.URL.split('?').pop().split('&');
+                    for (var i = 0, p; i < pairs.length; i++) {
+                        p = pairs[i].split('=');
+                        params[ p[0] ] =  p[1];
+                    }     
+                    return params;
+                })();
+
+                $('#table_id').DataTable({
+                    "ajax": {
+                        "url": `http://localhost:2017/public/campanha/${params["camp_id"]}/individual`,
+                        "dataSrc": "",
+                    },
+                    "columns": [
+                        { "data": "usu_id" },
+                        { "data": "usu_nome" },
+                        { "data": "total" },
+                    ]
+                });
+            } );
+        </script>
+    <div class="menu">
+        <div id="areaLogo">
+            <H1 id="principal">UEMG SOLIDÁRIA</H1>
+        </div>
+        <div id="areaMenu">
+            <a class="links" href="index.html">Início</a>
+            <a class="links" href="campanha.html">Campanha</a>
+            <a class="links" href="hospital.html">Hospital</a>
+            <a class="links" href="curso.html"> Curso Sistemas de Informação</a>
+            <a class="links" href="uemg.html">UEMG</a>
+        </div>
+    </div>
+    <div class="table_container">
+        <table id="table_id" class="display compact stripe">
+            <thead>
+                <tr>
+                    <th>usu_id</th>
+                    <th>usu_nome</th>
+                    <th>total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
