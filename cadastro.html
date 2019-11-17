@@ -5,9 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="menu.css">
     <link rel="stylesheet" href="cadastro.css" type="text/css">
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
     <title>Cadastro</title>
+    <style>
+		.cadastro_blocked {
+			display: none;
+		}
+    </style>
 </head>
 <body>
+    <script>
+        $(document).ready(function () {
+            if (typeof(Storage) === "undefined") {
+                $(".cadastro").hide();
+                $(".cadastro_blocked").show();
+                alert('Por favor, atualize ou troque seu navegador.');
+            }
+            $("#submit").click(function (e) {
+                e.preventDefault();
+
+                var usu_email = $("#usu_email").val();
+                var usu_password = $("#usu_password").val();
+                var usu_password2 = $("#usu_password2").val();
+                var usu_ra = $("#usu_ra").val();
+                var usu_nome = $("#usu_nome").val();
+
+                if (usu_password === usu_password2) {
+                    $.post("http://localhost:2017/public/user",
+                        { usu_email, usu_password, usu_nome, usu_ra },
+                        (r)=>{
+                            sessionStorage.token = r.token;
+                            sessionStorage.usu = r.user;
+                            document.location += "/../index.html";
+                        }
+                    ).fail((e)=>{
+                        alert(e.responseJSON.msg);
+                    })
+                }
+            
+            });
+        });
+    </script>
     <div class="menu">
 
         <div id="areaLogo">
@@ -23,36 +64,35 @@
     </div>
 
     <section class="content">
+        <div class="cadastro_blocked">
+            <h3>Erro no navegador</h3>
+        </div>
         <div class="cadastro">
             <h3>Cadastre-se</h3>
 
             <form class="form" method="POST">
                 <p>
                     <input type="text" class="field"
-                        name="name" placeholder="Nome Completo" required>    
+                        id="usu_nome" placeholder="Nome Completo" required>    
                 </p>
                 <p>
-                    <input type="email" class="field" name="email"
+                    <input type="email" class="field" id="usu_email"
                         placeholder="Email" required>
+                </p>                
+                <p>
+                    <input type="text" id="usu_ra"class="field" 
+                        placeholder="Número de RA">
                 </p>
                 <p>
-                    <input type="date" class="field" required>
-                </p>
-                
-                <p>
-                    <input type="text" name="ra"class="field" 
-                        placeholder="Seu RA">
-                </p>
-                <p>
-                    <input type="text" name="password" class="field"
+                    <input type="text" id="usu_password" class="field"
                         placeholder="Digite sua Senha">
                 </p>
                 <p>
-                    <input type="text" name="confirmPassword" class="field"
+                    <input type="text" id="usu_password2" class="field"
                         placeholder="Confirme sua senha">
                 </p>
                 <p class="enviar">
-                    <input type="submit" value="Cadastrar" name="enviar">
+                    <input type="submit" value="Cadastrar" id="submit">
                 </p>
             </form>
         </div>
