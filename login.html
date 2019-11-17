@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="menu.css" type="text/css">
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
     <title>Login</title>
 
     <style>
@@ -50,10 +54,38 @@
             margin: 20px 10px 30px 10px;
             float: right;
         }
+		.login_blocked {
+			display: none;
+		}
     </style>
-
 </head>
 <body>
+    <script>
+		$(document).ready(function () {
+			if (typeof(Storage) === "undefined") {
+				$(".login").hide();
+				$(".login_blocked").show();
+				alert('Por favor, atualize ou troque seu navegador.');
+			}
+			$("#submit").click(function (e) {
+				e.preventDefault();
+
+				var usu_email = $("#usu_email").val();
+				var usu_password = $("#usu_password").val();
+			
+				$.post("http://localhost:2017/public/login",
+					{ usu_email, usu_password },
+					(r)=>{
+						sessionStorage.token = r.token;
+						sessionStorage.usu = r.user;
+						document.location += "/../index.html";
+					}
+				).fail((e)=>{
+					alert(e.responseJSON.msg);
+				})
+			});
+		});
+    </script>
     <div class="menu">
         <div id="areaLogo">
             <H1 id="principal">UEMG SOLIDÁRIA</H1>
@@ -67,20 +99,23 @@
         </div>
     </div>
     <section class="content">
+        <div class="login_blocked">
+			<h3>Erro no navegador</h3>
+        </div>
         <div class="login">
             <h3>Login</h3>
 
-            <form class="form" method="POST">
+            <form class="form" method="POST" action="#">
                 <p>
-                    <input type="text" class="field" name="user"
-                        placeholder="ID ou Email" required>
+                    <input type="text" class="field" id="usu_email"
+                        placeholder="Email" required>
                 </p>
                 <p>
-                    <input type="password" class="field" name="password"
+                    <input type="password" class="field" id="usu_password"
                         placeholder="Senha" required>
                 </p>
                 <p class="enviar">
-                    <input type="submit" value="Entrar" name="submit">
+                    <input type="submit" value="Entrar" id="submit">
                 </p>
             </form>
         </div>
