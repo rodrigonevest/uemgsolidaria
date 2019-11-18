@@ -77,8 +77,10 @@
 					{ usu_email, usu_password },
 					(r)=>{
 						sessionStorage.token = r.token;
-						sessionStorage.usu = r.user;
-						document.location += "/../index.html";
+                        Object.keys(r.user).forEach((key) => {
+                            sessionStorage[key] = r.user[key];
+                        });
+						document.location += "/../usuario.html";
 					}
 				).fail((e)=>{
 					alert(e.responseJSON.msg);

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="menu.css" type="text/css">
+    <link rel="stylesheet" href="cadastro.css" type="text/css">
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <title>Painel do usuário</title>
+    <style>
+		.not_logged {
+			display: none;
+		}
+    </style>
+</head>
+<body>
+    <script>
+        $(document).ready(function () {
+            if (!sessionStorage.token) {
+                $(".logged").hide();
+                alert("Por favor, faça login.");
+                document.location += "/../login.html";
+                return;
+            }
+            
+            $("#usu_email").val(sessionStorage.usu_email);
+            $("#usu_ra").val(sessionStorage.usu_ra);
+            $("#usu_nome").val(sessionStorage.usu_nome);
+
+            $("#submitAlterar").click(function (e) {
+                e.preventDefault();
+
+                var usu_email = $("#usu_email").val();
+                var usu_ra = $("#usu_ra").val();
+                var usu_nome = $("#usu_nome").val();
+
+                $.ajax({
+                    url: "http://localhost:2017/private/user",
+                    headers: {
+                        Authorization: "Bearer " + sessionStorage.token,
+                    },
+                    type: "PUT",
+                    data: { usu_email, usu_nome, usu_ra },
+                    success: (r)=>{
+                        sessionStorage.usu_email = usu_email;
+                        sessionStorage.usu_nome = usu_nome;
+                        sessionStorage.usu_ra = usu_ra;
+                        alert('Dados alterados com sucesso');
+						document.location += "/../usuario.html";
+                    },
+                    error: (e)=>{
+                        alert(e.responseJSON.msg);
+                    }
+                });
+            });
+
+            $("#submitDoacao").click(function (e) {
+                e.preventDefault();
+
+                var doa_quantidade = $("#doa_quantidade").val();
+
+                $.ajax({
+                    url: "http://localhost:2017/private/doacao",
+                    headers: {
+                        Authorization: "Bearer " + sessionStorage.token,
+                    },
+                    type: "POST",
+                    data: { doa_quantidade },
+                    success: (r)=>{
+                        alert('Doação registrada. Entregue as tampinhas no local de coleta para confirmação.');
+						document.location += "/../index.html";
+                    },
+                    error: (e)=>{
+                        alert(e.responseJSON.msg);
+                    }
+                });
+            });
+        });
+    </script>
+    <div class="menu">
+        <div id="areaLogo">
+            <H1 id="principal">UEMG SOLIDÁRIA</H1>
+        </div>
+        <div id="areaMenu">
+            <a class="links" href="index.html">Início</a>
+            <a class="links" href="campanha.html">Campanha</a>
+            <a class="links" href="hospital.html">Hospital</a>
+            <a class="links" href="curso.html"> Curso Sistemas de Informação</a>
+            <a class="links" href="uemg.html">UEMG</a>
+        </div>
+    </div>
+    <div class="logged">
+        <section class="painel_user">
+            <h3>Alterar dados</h3>
+
+            <form class="form" method="POST">
+                <p>
+                    <input type="text" class="field"
+                        id="usu_nome" placeholder="Nome Completo" required>    
+                </p>
+                <p>
+                    <input type="email" class="field" id="usu_email"
+                        placeholder="Email" required>
+                </p>                
+                <p>
+                    <input type="text" id="usu_ra"class="field" 
+                        placeholder="Número de RA">
+                </p>
+                <p class="enviar">
+                    <input type="submit" value="Alterar" id="submitAlterar">
+                </p>
+            </form>
+        </section>
+        
+        <section class="painel_user doar">
+            <h3>Registrar doação</h3>
+
+            <form class="form" method="POST">
+                <p>
+                    <input type="number" class="field number"
+                        id="doa_quantidade" placeholder="Quantidade de tampinhas" required>    
+                </p>
+                <p class="enviar">
+                    <input type="submit" value="Registrar" id="submitDoacao">
+                </p>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
