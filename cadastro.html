@@ -39,7 +39,7 @@
                         (r)=>{
                             sessionStorage.token = r.token;
                             sessionStorage.usu = r.user;
-                            document.location += "/../index.html";
+                            document.location += "/../usuario.html";
                         }
                     ).fail((e)=>{
                         alert(e.responseJSON.msg);
