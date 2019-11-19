@@ -80,7 +80,11 @@
                         Object.keys(r.user).forEach((key) => {
                             sessionStorage[key] = r.user[key];
                         });
-						document.location += "/../usuario.html";
+                        if (r.user.usu_acesso === 2){
+						    document.location += "/../admin.html";
+                        } else {
+						    document.location += "/../usuario.html";
+                        }
 					}
 				).fail((e)=>{
 					alert(e.responseJSON.msg);
@@ -107,7 +111,7 @@
         <div class="login">
             <h3>Login</h3>
 
-            <form class="form" method="POST" action="#">
+            <form class="form" method="POST">
                 <p>
                     <input type="text" class="field" id="usu_email"
                         placeholder="Email" required>

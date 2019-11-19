@@ -8,14 +8,26 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="menu.css" type="text/css">
-    
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap4.css" type="text/css">    
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.js"></script>
     <title>Doe</title>
 </head>
 <body>
         <script>
+            const clickConfirmarDoacao = (doa_id) => {
+                const doa_quantidade = $(`:input[id="${doa_id}"]`).val();
+                
+                
+            };
+
+            const clickEstornarDoacao = (doa_id) => {
+                const doa_quantidade = $(`:input[id="${doa_id}"]`).val();
+
+            };
+
             $(document).ready( function () {
+                let table = '';
                 const baseUrl = "http://localhost:2017";
                 // parse do queryString (.html?param=1&arg=2)
                 const params = (() => {
@@ -84,6 +96,31 @@
                             ],
                             "callback": () => {}
                         },
+                    "GetDoacoes":                      {
+                            "method": "/admin/campanha/:camp_id/doacoes",
+                            "params": ["camp_id"],
+                            "columns": [
+                                {"title": "Nome", "data": "usu_nome"},
+                                {"title": "Quantidade de tampinhas", "data": "doa_quantidade"},
+                                {"title": "Confirmado", "data": "doa_confirmado"},
+                                {"title": "Ação", "data": "acao"},
+                            ],
+                            "callback": (e, settings, json, xhr) => {
+                                json.map((row)=> {
+                                    if (row.doa_confirmado) {
+                                        row.doa_confirmado = 'Aguardando';
+                                        row.acao = `<button class="btn btn-success" onClick="clickConfirmarDoacao(${row.doa_id})">Confirmar</button>`;
+                                    } else {
+                                        row.doa_confirmado = 'Confirmado';
+                                        row.acao = `<button class="btn btn-danger" onClick="clickEstornarDoacao(${row.doa_id})">Estornar</button>`;
+                                    }
+
+                                    row.doa_quantidade = `
+                                        <input class="doa_quantidade" id="${row.doa_id}" value="${row.doa_quantidade}"/>
+                                    `
+                                });
+                            }
+                        },
                     "GetUsuarioDoacao":                 {
                             "method": "/admin/user/:usu_id/doacao/:camp_id",
                             "columns": [
@@ -115,10 +152,18 @@
                 if (url === false) {
                     alert('Erro de configuração da página');
                 } else {
-                    $('#table_id').DataTable({
+                    let callback = (e, settings, json, xhr) => true;
+                    if (methods[params["method"]].callback) {
+                        callback = methods[params["method"]].callback;
+                    }
+
+                    table = $('#table_id').DataTable({
                         "ajax": {
                             "url": url,
                             "dataSrc": "",
+                            "headers": {
+                                "Authorization": `Bearer ${sessionStorage.token}`
+                            },
                         },
                         "columns": methods[params["method"]].columns,
                         "order": methods[params["method"]].order,
@@ -128,6 +173,12 @@
                                 "className": 'dt-center'
                             }
                         ]
+                    });
+                    table.on('xhr.dt', callback);
+                    table.on('xhr.dt', () => {
+                        if (params["search"]) {
+                            table.search(params["search"]);
+                        }
                     });
                 }
                 
