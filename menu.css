@@ -36,8 +36,9 @@ a{
 }
 
 body{
-    background: #fff url('./Images/pet2.jpg') no-repeat;
-}
+    background: #fff url('./Images/pet.jpg') no-repeat;
+    background-size: cover;
+   }
 
 .footer{
     background-color: #571669;
@@ -449,3 +450,26 @@ body{
       text-align: center;
       max-width: 10vh;
   }
+.imagem1 img{
+                width: 100px;
+                height: 100px;
+                padding: 10px;
+            }
+
+.clearfix:after{
+            content: "";
+            clear: both;
+            display: table;
+
+}
+
+.column{
+                float: left;
+                padding: 15px;
+}
+
+.menucoluna li:hover {
+                padding: 8px;
+                margin-bottom: 8px;
+
+            }

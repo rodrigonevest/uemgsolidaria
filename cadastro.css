@@ -36,7 +36,8 @@ a:hover{
 }
 
 body{
-    background: #fff url('./Images/pet2.jpg') no-repeat;
+    background: #fff url('./Images/pet.jpg') no-repeat;
+    background-size: cover;
 }
 
 .content{
@@ -44,10 +45,10 @@ body{
     background: #571669;
     max-width: 500px;
     margin: 90px auto;
-    padding: 0px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
     border-radius: 10px;
     border: 2 solid;
-    height: 370px;
+    height: 550px auto;
 }
 
 .logged{

@@ -1,131 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>CURSO DE SISTEMAS DE INFORMAÇÃO</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css"href="menu.css">
+	<title>CURSO SISTEMAS DE INFORMAÇÃO</title>
 
+	<style>
+        .image{
+            margin: 30px;
+            text-align: center;
+        }
 
-	<style type="text/css">
-		*{
-			margin: 1;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		.menu ul li{
-			font-family: "Arial";
-			background-color: #571669;
-			color: #fff;
-			float: left;
-			width: 266px;
-			height: 40px;
-			display: inline-block;
-			text-align: center;
-			line-height: 40px;
-			font-size: 15px;
-		}
-		.menu ul li:hover{
-			background-color: #526880;
-		}
-		.menu a{
-			padding: 10px;
-			display: block;
-			text-decoration: none;
-			background-color: #571669;
-			color: #fff;
-		}
-		.imagem img{
-				width: 600px;
-				height: 430px;
-				padding: 40px;
-				
-			}
-			.texto {
-				font-size: 15px;
-				color: #571669;
-				padding: 40px;
-				background: white;
-				width: 75%;
-			}
-			.column{
-				float: left;
-				padding: 15px;
-
-				
-}
-			.clearfix:after;{
-			content: "";
-			clear: both;
-			display: table;
-
-}
-			.menucoluna{
-				width: 10%;
-				
-			}
-			.menucoluna ul{
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			.menucoluna li:hover {
-				padding: 8px;
-				margin-bottom: 8px;
-
-			}
-
-			.imagem1 img{
-				width: 100px;
-				height: 100px;
-				padding: 10px;
-			}
-			.content{
-				width: 75%;
-				background: white;
-			}
-
-	</style>
-</head>
-<body background="pet2.jpg" >
-
-	<header>
-	 <nav class="menu">
-	 	<ul>
-	 		<p><li><a href="index.html">Inicio</a></li></p>
-	 		<li><a href="campanha.html">Campanha</a></li>
-	 		<li><a href="hospital.html"> Hospital</a></li>
-	 		<li><a href="curso.html"> Curso Sistemas de Informação</a></li>
-	 		<li><a href="uemg.html"> UEMG</a></li>
-	 	</ul>
+        .text{
+            text-align: center;
+            margin: 20px 100px 20px 100px;
+            padding: 10px;
+            background-color: aliceblue;
+            border-radius: 5px;
+            border: 1px;
+            font-family: Arial, Helvetica, sans-serif;
             
-        </nav>
-        <div class="imagem">
-        	
-	<center>
-		<img src="#">
-	</center><br><br><br></div><center>
-	<div class="texto">
-		<h3> <p>Conheça um pouco do curso:</p>
-			O curso forma profissionais para atuar com gestão na área da informática, criação de projetos, softwares, aplicativos e sistemas computacionais para os mais diversos usos, nos setores do comércio, indústria e serviços. Visa à formação de profissionais com base de conhecimentos da Ciência da Computação e da Tecnologia da Informação.
-		</h3>
-	</div></center>
-	
-	<p>
-		<center><div class="imagem1">
+
+        }
+    </style>
+</head>
+<body>
+	 <div class="menu">
+                
+        <div id="areaLogo">
+               <H1 id="principal">UEMG SOLIDÁRIA</H1>
+        </div>
+            <div id="areaMenu">
+                    <a class="links" href="index.html">Início</a>
+                    <a class="links" href="campanha.html">Campanha</a>
+                    <a class="links" href="hospital.html">Hospital</a>
+                    <a class="links" href="curso.html"> Curso Sistemas de Informação</a>
+                    <a class="links" href="uemg.html">UEMG</a>
+            </div>
+    </div>
+
+    <div class="image">
+        <img src="./Images/curso.jpg"  
+            width="35%">
+    </div>
+
+    <div class="text">
+    	<p>
+    		O curso forma profissionais para atuar com gestão na área da informática, criação de projetos, softwares, aplicativos e sistemas computacionais para os mais diversos usos, nos setores do comércio, indústria e serviços. Visa à formação de profissionais com base de conhecimentos da Ciência da Computação e da Tecnologia da Informação.
+    	</p>
+    	<br>
+    	
+    </div>
+
+    	<p>
+		<div class="imagem1">
 			<div class="clearfix">
 				<div class="column menucoluna">
 					
-				<ul>
-					<li ><h2 >Acesse as redes sociais:</h2></li>
-					<li><a href="https://www.instagram.com/siuemgfrutal/?hl=pt-br"><img src="insta.png" ></a><h2></h2></li>
-					<li><a href="https://www.facebook.com/SIUEMGFRUTAL/"><img src="face.jpg" ></a></li>
+				<ul><div class="text">
+					Acesse as redes sociais:</div>
+					<a href="https://www.instagram.com/siuemgfrutal/?hl=pt-br"><img src="./Images/insta.png" ></a>
+					<a href="https://www.facebook.com/SIUEMGFRUTAL/"><img src="./Images/face.jpg" ></a>
 					
 				</ul>
 				</div>
 			</div>
-</div></p></center>
-			
-
-
-		
+</div></p>
+<br>
+    <footer class="footer">
+        Todos os direitos reservados
+    </footer>
 
 </body>
 </html>
