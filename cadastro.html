@@ -47,7 +47,9 @@
                         { usu_email, usu_password, usu_nome, usu_ra },
                         (r)=>{
                             sessionStorage.token = r.token;
-                            sessionStorage.usu = r.user;
+                        Object.keys(r.user).forEach((key) => {
+                            sessionStorage[key] = r.user[key];
+                        });
                             document.location += "/../usuario.html";
                         }
                     ).fail((e)=>{

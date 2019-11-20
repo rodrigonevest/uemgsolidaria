@@ -10,24 +10,54 @@
     <link rel="stylesheet" href="menu.css" type="text/css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap4.css" type="text/css">    
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.css"/>
+g    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js" integrity="sha256-aIToY7VLU5x+toAJcyINV0WEogFBCIVeeWhyUbCaYiQ=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.js"></script>
     <title>Doe</title>
 </head>
 <body>
         <script>
+            let table = '';
             const clickConfirmarDoacao = (doa_id) => {
                 const doa_quantidade = $(`:input[id="${doa_id}"]`).val();
                 
-                
+                $.ajax({
+                    url: `http://localhost:2017/admin/doacao/${doa_id}`,
+                    headers: {
+                        Authorization: "Bearer " + sessionStorage.token,
+                    },
+                    type: "PUT",
+                    data: { doa_quantidade, confirm: true },
+                    success: (r)=>{
+                        alert('Doação confirmada com sucesso!');
+                        table.ajax.reload();
+                    },
+                    error: (e)=>{
+                        alert(e.responseJSON.msg);
+                    }
+                });
             };
 
             const clickEstornarDoacao = (doa_id) => {
-                const doa_quantidade = $(`:input[id="${doa_id}"]`).val();
 
+                $.ajax({
+                    url: `http://localhost:2017/admin/doacao/${doa_id}`,
+                    headers: {
+                        Authorization: "Bearer " + sessionStorage.token,
+                    },
+                    type: "PUT",
+                    data: { confirm: false },
+                    success: (r)=>{
+                        alert('Doação estornada com sucesso!');
+                        table.ajax.reload();
+                    },
+                    error: (e)=>{
+                        alert(e.responseJSON.msg);
+                    }
+                });
             };
 
             $(document).ready( function () {
-                let table = '';
                 const baseUrl = "http://localhost:2017";
                 // parse do queryString (.html?param=1&arg=2)
                 const params = (() => {
@@ -63,6 +93,7 @@
                         },
                     "GetGruposDoacao":                  {
                             "method": "/public/grupo/:gru_id/campanha/:camp_id",
+                            "params": [],
                             "columns": [
                                 {"title": "", "data": ""},
                             ],
@@ -70,6 +101,7 @@
                         },
                     "GetGruposIntegrantes":             {
                             "method": "/public/grupo/:gru_id/users",
+                            "params": [],
                             "columns": [
                                 {"title": "", "data": ""},
                             ],
@@ -77,6 +109,7 @@
                         },
                     "GetGrupos":                        {
                             "method": "/public/grupos",
+                            "params": [],
                             "columns": [
                                 {"title": "", "data": ""},
                             ],
@@ -84,45 +117,55 @@
                         },
                     "GetCampanhas":                     {
                             "method": "/public/campanhas",
+                            "params": [],
                             "columns": [
                                 {"title": "", "data": ""},
                             ],
                             "callback": () => {}
                         },
                     "GetUsuarios":                      {
-                            "method": "/admin/usuarios",
+                            "method": "/admin/users",
+                            "params": [],
                             "columns": [
-                                {"title": "", "data": ""},
+                                {"title": "Nome", "data": "usu_nome"},
+                                // {"title": "RA", "data": "usu_ra"},
+                                {"title": "Ação", "data": "acao"},
                             ],
-                            "callback": () => {}
+                            "callback": (e, settings, json, xhr) => {
+                                console.log(json);
+                            }
                         },
                     "GetDoacoes":                      {
                             "method": "/admin/campanha/:camp_id/doacoes",
                             "params": ["camp_id"],
                             "columns": [
                                 {"title": "Nome", "data": "usu_nome"},
-                                {"title": "Quantidade de tampinhas", "data": "doa_quantidade"},
-                                {"title": "Confirmado", "data": "doa_confirmado"},
+                                {"title": "Total de tampinhas", "data": "doa_quantidade"},
+                                {"title": "Criação", "data": "createdAt"},
+                                {"title": "Alterado", "data": "updatedAt"},
+                                {"title": "Status", "data": "doa_confirmado"},
                                 {"title": "Ação", "data": "acao"},
                             ],
                             "callback": (e, settings, json, xhr) => {
                                 json.map((row)=> {
+                                    row.createdAt = moment(row.createdAt).format('DD/MM/YYYY HH:mm');
+                                    row.updatedAt = moment(row.updatedAt).format('DD/MM/YYYY HH:mm');
                                     if (row.doa_confirmado) {
-                                        row.doa_confirmado = 'Aguardando';
-                                        row.acao = `<button class="btn btn-success" onClick="clickConfirmarDoacao(${row.doa_id})">Confirmar</button>`;
-                                    } else {
                                         row.doa_confirmado = 'Confirmado';
                                         row.acao = `<button class="btn btn-danger" onClick="clickEstornarDoacao(${row.doa_id})">Estornar</button>`;
+                                    } else {
+                                        row.doa_quantidade = `
+                                            <input class="doa_quantidade" id="${row.doa_id}" value="${row.doa_quantidade}"/>
+                                        `
+                                        row.doa_confirmado = 'Aguardando';
+                                        row.acao = `<button class="btn btn-success" onClick="clickConfirmarDoacao(${row.doa_id})">Confirmar</button>`;
                                     }
-
-                                    row.doa_quantidade = `
-                                        <input class="doa_quantidade" id="${row.doa_id}" value="${row.doa_quantidade}"/>
-                                    `
                                 });
                             }
                         },
                     "GetUsuarioDoacao":                 {
                             "method": "/admin/user/:usu_id/doacao/:camp_id",
+                            "params": [],
                             "columns": [
                                 {"title": "", "data": ""},
                             ],
@@ -173,6 +216,14 @@
                                 "className": 'dt-center'
                             }
                         ]
+                    });
+                    table.on('xhr.dt', (e, settings, json, xhr) => {
+                        if (xhr.status == 403) {
+                            alert('Acesso restrito');
+                            json = [];
+						    document.location = "login.html";
+                            return;
+                        }
                     });
                     table.on('xhr.dt', callback);
                     table.on('xhr.dt', () => {

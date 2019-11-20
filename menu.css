@@ -35,6 +35,10 @@ a{
     background: #fff;
 }
 
+.operacoes{
+  margin-top: 20px;
+}
+
 body{
     background: #fff url('./Images/pet.jpg') no-repeat;
     background-size: cover;
