@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="menu.css" type="text/css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.js"></script>
+    <title>Doe</title>
+</head>
+<body>
+        <script>
+            $(document).ready( function () {
+                const baseUrl = "http://localhost:2017";
+                // parse do queryString (.html?param=1&arg=2)
+                const params = (() => {
+                    var params = {},
+                        pairs = document.URL.split('?').pop().split('&');
+                    for (var i = 0, p; i < pairs.length; i++) {
+                        p = pairs[i].split('=');
+                        params[ p[0] ] =  p[1];
+                    }
+                    return params;
+                })();
+                const methods = {
+                    "GetCampanhaRankingIndividual":     {
+                            "method": "/public/campanha/:camp_id/individual",
+                            "params": ["camp_id"],
+                            "columns": [
+                                {"title": "Id", "data": "usu_id"},
+                                {"title": "Nome", "data": "usu_nome"},
+                                {"title": "Total", "data": "total"},
+                            ],
+                            "order": [[ 2, "desc" ]],
+                            "callback": () => {}
+                        },
+                    "GetCampanhaRankingGrupo":          {
+                            "method": "/public/campanha/:camp_id/grupo",
+                            "params": ["camp_id"],
+                            "columns": [
+                                {"title": "Id", "data": "gru_id"},
+                                {"title": "Nome", "data": "gru_nome"},
+                                {"title": "Total", "data": "total"},
+                            ],
+                            "callback": () => {}
+                        },
+                    "GetGruposDoacao":                  {
+                            "method": "/public/grupo/:gru_id/campanha/:camp_id",
+                            "columns": [
+                                {"title": "", "data": ""},
+                            ],
+                            "callback": () => {}
+                        },
+                    "GetGruposIntegrantes":             {
+                            "method": "/public/grupo/:gru_id/users",
+                            "columns": [
+                                {"title": "", "data": ""},
+                            ],
+                            "callback": () => {}
+                        },
+                    "GetGrupos":                        {
+                            "method": "/public/grupos",
+                            "columns": [
+                                {"title": "", "data": ""},
+                            ],
+                            "callback": () => {}
+                        },
+                    "GetCampanhas":                     {
+                            "method": "/public/campanhas",
+                            "columns": [
+                                {"title": "", "data": ""},
+                            ],
+                            "callback": () => {}
+                        },
+                    "GetUsuarios":                      {
+                            "method": "/admin/usuarios",
+                            "columns": [
+                                {"title": "", "data": ""},
+                            ],
+                            "callback": () => {}
+                        },
+                    "GetUsuarioDoacao":                 {
+                            "method": "/admin/user/:usu_id/doacao/:camp_id",
+                            "columns": [
+                                {"title": "", "data": ""},
+                            ],
+                            "callback": () => {}
+                        },
+                };
+                const url = (() => {
+                    // monta a URL de consulta na API
+                    let url = methods[params.method].method;
+                    args = {...params};
+                    delete args.method;
+
+                    let params_required = methods[params.method].params;
+                    const validate_required = params_required.every((param) => {
+                        return !!args[param];
+                    })
+                    if (!validate_required) {
+                        return false;
+                    }
+                    
+                    Object.keys(args).forEach((argName) => {
+                        url = url.replace(':' + argName, args[argName]);
+                    });
+                    return baseUrl + url;
+                })();
+                
+                if (url === false) {
+                    alert('Erro de configuração da página');
+                } else {
+                    $('#table_id').DataTable({
+                        "ajax": {
+                            "url": url,
+                            "dataSrc": "",
+                        },
+                        "columns": methods[params["method"]].columns,
+                        "order": methods[params["method"]].order,
+                        "columnDefs": [
+                            {
+                                "targets": "_all",
+                                "className": 'dt-center'
+                            }
+                        ]
+                    });
+                }
+                
+            } );
+        </script>
+    <div class="menu">
+        <div id="areaLogo">
+            <H1 id="principal">UEMG SOLIDÁRIA</H1>
+        </div>
+        <div id="areaMenu">
+            <a class="links" href="index.html">Início</a>
+            <a class="links" href="campanha.html">Campanha</a>
+            <a class="links" href="hospital.html">Hospital</a>
+            <a class="links" href="curso.html"> Curso Sistemas de Informação</a>
+            <a class="links" href="uemg.html">UEMG</a>
+        </div>
+    </div>
+    <div class="table_container">
+        <table id="table_id" class="display compact stripe">
+            <thead>
+                <tr id="thead">
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

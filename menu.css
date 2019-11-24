@@ -49,6 +49,11 @@ body{
     height: 20px;
     clear: both;
 }
+
+.table_container{
+    background: whitesmoke
+}
+
 .imagem1 img{
                 width: 100px;
                 height: 100px;
