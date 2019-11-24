@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="menu.css" type="text/css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap4.css" type="text/css">    
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.css"/>
-g    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js" integrity="sha256-aIToY7VLU5x+toAJcyINV0WEogFBCIVeeWhyUbCaYiQ=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/ju/dt-1.10.20/b-1.6.1/b-print-1.6.1/r-2.2.3/sc-2.0.1/datatables.min.js"></script>
     <title>Doe</title>
@@ -18,6 +18,30 @@ g    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment
 <body>
         <script>
             let table = '';
+            const clickCadastrarDoacao = (usu_id, camp_id) => {
+                const doa_quantidade = $(`:input[id="${usu_id}"]`).val();
+                if (doa_quantidade == 0) {
+                    alert('A quantidade deve ser maior que zero!');
+                    return;
+                }
+
+                $.ajax({
+                    url: `http://localhost:2017/admin/doacao/${usu_id}`,
+                    headers: {
+                        Authorization: "Bearer " + sessionStorage.token,
+                    },
+                    type: "POST",
+                    data: { doa_quantidade, doa_campid: camp_id },
+                    success: (r)=>{
+                        alert('Doação registrada com sucesso!');
+                        table.ajax.reload();
+                    },
+                    error: (e)=>{
+                        alert(e.responseJSON.msg);
+                    }
+                });
+            };
+            
             const clickConfirmarDoacao = (doa_id) => {
                 const doa_quantidade = $(`:input[id="${doa_id}"]`).val();
                 
@@ -74,11 +98,12 @@ g    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment
                             "method": "/public/campanha/:camp_id/individual",
                             "params": ["camp_id"],
                             "columns": [
-                                {"title": "Id", "data": "usu_id"},
+                                {"title": "Posição", "data": "position"},
                                 {"title": "Nome", "data": "usu_nome"},
+                                {"title": "RA", "data": "usu_ra"},
                                 {"title": "Total", "data": "total"},
                             ],
-                            "order": [[ 2, "desc" ]],
+                            "order": [[ 3, "desc" ]],
                             "callback": () => {}
                         },
                     "GetCampanhaRankingGrupo":          {
@@ -128,11 +153,17 @@ g    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment
                             "params": [],
                             "columns": [
                                 {"title": "Nome", "data": "usu_nome"},
-                                // {"title": "RA", "data": "usu_ra"},
+                                {"title": "RA", "data": "usu_ra"},
+                                {"title": "Total de tampinhas", "data": "doa_quantidade"},
                                 {"title": "Ação", "data": "acao"},
                             ],
                             "callback": (e, settings, json, xhr) => {
-                                console.log(json);
+                                json.map((row)=> {
+                                    row.doa_quantidade = `
+                                        <input class="doa_quantidade" id="${row.usu_id}" value="0"/>
+                                    `
+                                    row.acao = `<button class="btn btn-success" onClick="clickCadastrarDoacao(${row.usu_id}, ${params.camp_id})">Cadastrar Doação</button>`;
+                                });
                             }
                         },
                     "GetDoacoes":                      {
@@ -215,7 +246,10 @@ g    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment
                                 "targets": "_all",
                                 "className": 'dt-center'
                             }
-                        ]
+                        ],
+                        "language": {
+                            "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Portuguese-Brasil.json"
+                        }
                     });
                     table.on('xhr.dt', (e, settings, json, xhr) => {
                         if (xhr.status == 403) {

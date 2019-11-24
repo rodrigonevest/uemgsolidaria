@@ -43,13 +43,21 @@
                 var usu_nome = $("#usu_nome").val();
 
                 if (usu_password === usu_password2) {
+                    var forms = document.getElementsByClassName('field');
+                    const validation = Object.values(forms).every((input) => {
+                        if (input.required) {
+                            return input.checkValidity();
+                        }
+                        return true;
+                    });
+
                     $.post("http://localhost:2017/public/user",
                         { usu_email, usu_password, usu_nome, usu_ra },
                         (r)=>{
                             sessionStorage.token = r.token;
-                        Object.keys(r.user).forEach((key) => {
-                            sessionStorage[key] = r.user[key];
-                        });
+                            Object.keys(r.user).forEach((key) => {
+                                sessionStorage[key] = r.user[key];
+                            });
                             document.location += "/../usuario.html";
                         }
                     ).fail((e)=>{
@@ -86,7 +94,7 @@
     </div>
             <h3>Cadastre-se</h3>
 
-            <form class="form" method="POST">
+            <form class="form" method="POST" action="#">
                 <p>
                     <input type="text" class="field"
                         id="usu_nome" placeholder="Nome Completo" required>    
@@ -96,16 +104,16 @@
                         placeholder="Email" required>
                 </p>                
                 <p>
-                    <input type="text" id="usu_ra"class="field" 
-                        placeholder="Número de RA">
+                    <input type="text" id="usu_ra" class="field" 
+                        placeholder="Número de RA" required>
                 </p>
                 <p>
                     <input type="text" id="usu_password" class="field"
-                        placeholder="Digite sua Senha">
+                        placeholder="Digite sua Senha" required>
                 </p>
                 <p>
                     <input type="text" id="usu_password2" class="field"
-                        placeholder="Confirme sua senha">
+                        placeholder="Confirme sua senha" required>
                 </p>
                 <p class="enviar">
                     <input type="submit" value="Cadastrar" id="submit">
