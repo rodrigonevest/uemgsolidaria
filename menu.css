@@ -58,8 +58,6 @@ body{
     background: whitesmoke
 }
 
-
-
 .btn {
     display: inline-block;
     *display: inline;
@@ -454,6 +452,7 @@ body{
       text-align: center;
       max-width: 10vh;
   }
+
 .imagem1 img{
                 width: 100px;
                 height: 100px;
